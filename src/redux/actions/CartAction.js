@@ -14,8 +14,9 @@ var data = localStorage.setItem("cart",JSON.stringify(product));
 
 
 export const getCartItems = () => async(dispach, getState) =>{
-    var data = localStorage.getItem("cart")
+    var data = JSON.parse(localStorage.getItem("cart")) 
 
+    console.log(data);
     dispach({
         type: GET_CART_ITEMS,
         payload:data

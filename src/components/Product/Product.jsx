@@ -10,17 +10,26 @@ import Typography from '@mui/material/Typography';
 import Grid from "@mui/material/Grid"
 import { Rating, Skeleton } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { addToCartAction } from '../../redux/actions/CartAction';
+import { addToCartAction, getCartItems } from '../../redux/actions/CartAction';
 
 
 function Product() {
 
-  const [cart, setCart] = useState([]);
 
   const getProduct = useSelector((state) => state.products.products.message)
 
+  const carts = useSelector((state) => state.carts)
+
+
+
+  console.log(carts);
+
   const dispach = useDispatch()
 
+  useEffect(() => {
+    dispach(getCartItems())
+    dispach(GetProductAction())
+  }, [])
 
   const addToCartHandle = (id,title, price, image) =>{
 
@@ -30,16 +39,8 @@ function Product() {
       price: price,
       img: image
     }
-
-    setCart([...cart, cartProduct])
-
+    dispach(addToCartAction([...carts, cartProduct]))
   }
-
-
-  useEffect(() => {
-    dispach(GetProductAction())
-    dispach(addToCartAction(cart))
-  }, [cart])
 
 
   const LoadingData = () => {
