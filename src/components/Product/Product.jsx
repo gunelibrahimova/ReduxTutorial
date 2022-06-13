@@ -15,9 +15,11 @@ import { addToCartAction, getCartItems } from '../../redux/actions/CartAction';
 
 function Product() {
 
+  const[cart, setCart] = useState([]);
+
 
   const getProduct = useSelector((state) => state.products.products.message)
-
+  
   const carts = useSelector((state) => state.carts)
 
 
@@ -27,19 +29,11 @@ function Product() {
   const dispach = useDispatch()
 
   useEffect(() => {
-    dispach(getCartItems())
     dispach(GetProductAction())
   }, [])
 
-  const addToCartHandle = (id,title, price, image) =>{
-
-    const cartProduct = {
-      id: id,
-      name: title,
-      price: price,
-      img: image
-    }
-    dispach(addToCartAction([...carts, cartProduct]))
+  const addToCartHandle = (id) =>{
+    dispach(addToCartAction(id))
   }
 
 

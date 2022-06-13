@@ -1,17 +1,16 @@
 import { ADD_TO_CART, GET_CART_ITEMS } from "../Constans/CartConstatns";
 
-const initialState ={
-    cart: {}
-}
 
-export const CartReducer = (state = initialState, action) =>{
+
+export const CartReducer = (state = {cartItems:[]}, action) =>{
 
     
     switch (action.type) {
         case ADD_TO_CART:
+            let item = action.payload;
             return{
                 ...state,
-                cart : action.payload
+                cartItems:[...state.cartItems,item]
             }
 
             case GET_CART_ITEMS:

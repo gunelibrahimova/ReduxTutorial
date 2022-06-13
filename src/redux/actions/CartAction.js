@@ -1,14 +1,25 @@
+import { BASE_URL } from "../../api/Config";
 import { ADD_TO_CART,GET_CART_ITEMS  } from "../Constans/CartConstatns"
 
 
-export const addToCartAction = (product) =>async (dispach, getState) =>{
+export const addToCartAction = (id) =>async (dispach, getState) =>{
 
-var data = localStorage.setItem("cart",JSON.stringify(product));
+
+    const data = await (await fetch(`${BASE_URL}Product/getbyid/${id}`)).json()
+
+    const product ={
+        id:data.message.id,
+        name: data.message.name,
+        price:data.message.price,
+        img:data.message.coverPhoto
+    }
 
     dispach({
         type: ADD_TO_CART,
-        payload:data
+        payload: product
     })
+
+     localStorage.setItem("cartItems",JSON.stringify(getState().cart.cartItems));
         
 }
 
